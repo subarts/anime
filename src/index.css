@@ -1,0 +1,17 @@
+li{
+list-style-type: none;
+}
+.anime__item{
+  border: 1px solid lightgray;
+  border-radius: 10px;
+  width: fit-content;
+  padding: 10px;
+}
+.anime__list{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+body{
+max-width: 1200px;
+}
