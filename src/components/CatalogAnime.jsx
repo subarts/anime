@@ -1,37 +1,35 @@
 import { useState, useEffect } from "react"
 import Sort from "./Sort"
+import Filter from "./Filter"
+
 const CatalogAnime = () => {
   const url = "https://api.jikan.moe/v4/anime?"
 
   const [anime, setAnime] = useState([])
   const [pagination, setPagination] = useState({})
   const [page, setPage] = useState(1)
-  const [sort, setSort] = useState("desc")
-  const searchParams = new URLSearchParams("order_by=popularity")
+  const [sort, setSort] = useState("asc")
+  const [order, setOrder] = useState("popularity")
+  const searchParams = new URLSearchParams("")
 
-  /*   searchParams.append("published", "1952")
-  searchParams.set("author", "Orwell") */
-  /*   searchParams.delete("published") */
-  /*   searchParams.append("orger_by", "popularity")
-   */
+  searchParams.append("order_by", order)
   searchParams.append("sort", sort)
   const getAnimeList = async () => {
-    console.log(url + searchParams)
     const response = await fetch(url + searchParams).then((response) =>
       response.json()
     )
+
     setAnime(response.data)
     setPagination(response.pagination)
     setPage(response.pagination.current_page)
   }
   useEffect(() => {
     getAnimeList()
-  }, [sort])
+  }, [sort, order])
   /* переключение страниц */
   function nextPage() {
-    if (page) {
+    if (page < pagination.last_visible_page) {
       searchParams.append("page", page + 1)
-      /* легально ли так делоть с пейдж? */
       getAnimeList()
     }
     return
@@ -44,13 +42,17 @@ const CatalogAnime = () => {
     }
     return
   }
-  /* gjkexty */
+  /* получение сортировок с sort.jsx */
   function selectedSort(select) {
     setSort(select)
   }
+  function orderSort(order) {
+    setOrder(order)
+  }
   return (
     <>
-      <Sort selectedSort={selectedSort} />
+      <Filter />
+      <Sort selectedSort={selectedSort} orderSort={orderSort} />
 
       <div className="anime__list">
         <p>
@@ -59,9 +61,9 @@ const CatalogAnime = () => {
         </p>
         <button onClick={prevPage}>преведущая</button>
         <button onClick={nextPage}>следующая</button>
-        {anime.map((el) => {
+        {anime.map((el, index) => {
           return (
-            <div key={el.mal_id} className="anime__item">
+            <div key={index} className="anime__item">
               <img
                 src={`${el.images.jpg.small_image_url}`}
                 alt={`${el.title}`}

@@ -1,10 +1,12 @@
 import "./App.css"
 import CatalogAnime from "./components/CatalogAnime"
-import Sort from "./components/Sort"
+import Filter from "./components/Filter"
+
 function App() {
   return (
     <>
-      <CatalogAnime />
+      {/*  <CatalogAnime /> */}
+      <Filter />
     </>
   )
 }
