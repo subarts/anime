@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import Sort from "./Sort"
 import Filter from "./Filter"
+import { Link } from "react-router-dom"
 
 const CatalogAnime = () => {
   const url = "https://api.jikan.moe/v4/anime?"
@@ -10,22 +11,26 @@ const CatalogAnime = () => {
   const [page, setPage] = useState(1)
   const [sort, setSort] = useState("asc")
   const [order, setOrder] = useState("popularity")
+  const [producers, setproducers] = useState([])
   const searchParams = new URLSearchParams("")
-
   searchParams.append("order_by", order)
   searchParams.append("sort", sort)
+
   const getAnimeList = async () => {
     const response = await fetch(url + searchParams).then((response) =>
       response.json()
     )
-
+    console.log(response.data)
+    console.log(url + searchParams)
     setAnime(response.data)
     setPagination(response.pagination)
     setPage(response.pagination.current_page)
   }
   useEffect(() => {
-    getAnimeList()
-  }, [sort, order])
+    setTimeout(() => {
+      getAnimeList()
+    }, 1000)
+  }, [sort, order, producers])
   /* переключение страниц */
   function nextPage() {
     if (page < pagination.last_visible_page) {
@@ -49,9 +54,16 @@ const CatalogAnime = () => {
   function orderSort(order) {
     setOrder(order)
   }
+  /* получение с producers */
+  function addproducersFilter(newproducers, bool) {
+    bool
+      ? setproducers([...producers, newproducers])
+      : setproducers(producers.filter((el) => el !== newproducers))
+  }
+  searchParams.append("producers", producers)
   return (
     <>
-      <Filter />
+      <Filter addproducersFilter={addproducersFilter} />
       <Sort selectedSort={selectedSort} orderSort={orderSort} />
 
       <div className="anime__list">
@@ -70,6 +82,9 @@ const CatalogAnime = () => {
                 width={"54px"}
               />
               <ul>
+                {el.producers.map((el) => {
+                  return <li key={el.name}>{el.name}</li>
+                })}
                 <li>{el.mal_id}</li>
                 <li>{el.title}</li>
                 <li>Ранг:{el.rank}</li>

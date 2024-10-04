@@ -1,10 +1,10 @@
-import GetGenresAnime from "./GetGenresAnime"
+import GenresAnime from "./GenresAnime"
 import { useState } from "react"
 import FilterSingleChoice from "./Filters/FilterSingleChoice"
 import Period from "./Filters/Period"
-import GetProdusersAnime from "./GetProdusersAnime"
+import ProducersAnime from "./ProducersAnime"
 
-const Filter = () => {
+const Filter = ({ addproducersFilter }) => {
   /* типу, рейтингу, статусу (единственное число - один вариант выбора),
    периоду времени, жанрам (можно выбрать несколько), исключенные жанры (можно выбрать несколько), 
    продюсерам (можно выбрать несколько)
@@ -49,14 +49,13 @@ const Filter = () => {
   function select(status, filterElement) {
     setFilters({ ...filters, [filterElement]: status })
   }
-  /* filter date */
+
   function selectStartDate(start) {
     setFilters({ ...filters, start_date: start })
   }
   function selectEndDate(end) {
     setFilters({ ...filters, end_date: end })
   }
-
   return (
     <>
       <label htmlFor="selected__filter">Отфильтровать по </label>
@@ -68,16 +67,11 @@ const Filter = () => {
           selectStartDate={selectStartDate}
           selectEndDate={selectEndDate}
         />
-
-        {/* 
-        <li value="genres">жанрам</li>
-        <li value="genres_exclude">жанры кроме</li>
-        <li value="producers">продюсерам</li> */}
       </div>
 
-      {/* <GetGenresAnime /> */}
+      <GenresAnime />
 
-      <GetProdusersAnime />
+      <ProducersAnime addproducersFilter={addproducersFilter} />
     </>
   )
 }

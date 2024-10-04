@@ -15,3 +15,8 @@
 .produsers__item:hover{
   background-color: lightgray;
 }
+.page_info{
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
