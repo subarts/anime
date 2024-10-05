@@ -1,6 +1,6 @@
 const Period = ({ selectStartDate, selectEndDate }) => {
   return (
-    <div>
+    <div className="filters__date">
       <label htmlFor="start__date">выбрать начальную дату</label>
       <input
         type="date"

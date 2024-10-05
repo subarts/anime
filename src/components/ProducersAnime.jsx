@@ -33,35 +33,39 @@ const ProducersAnime = ({ addproducersFilter }) => {
   }
 
   return (
-    <>
+    <fieldset className="producers__list">
+      <legend>Producers</legend>
+      {producers.map((el) => {
+        return (
+          <label key={el.titles[0].title} className="producers__checkbox">
+            <input
+              className="producers__input"
+              type="checkbox"
+              id={el.titles[0].title}
+              value={el.mal_id}
+              onChange={(e) =>
+                e.target.checked
+                  ? addproducersFilter(e.target.value, true)
+                  : addproducersFilter(e.target.value, false)
+              }
+            />
+            {el.titles[0].title}
+          </label>
+        )
+      })}
       <p>
-        страница: {pagination.current_page} из
+        page: {pagination.current_page} from
         {pagination.last_visible_page}
       </p>
-      <fieldset>
-        <legend>producers</legend>
-        {producers.map((el) => {
-          return (
-            <label key={el.titles[0].title} className="producers__checkbox">
-              <input
-                className="producers__input"
-                type="checkbox"
-                id={el.titles[0].title}
-                value={el.mal_id}
-                onChange={(e) =>
-                  e.target.checked
-                    ? addproducersFilter(e.target.value, true)
-                    : addproducersFilter(e.target.value, false)
-                }
-              />
-              {el.titles[0].title}
-            </label>
-          )
-        })}
-      </fieldset>
-      <button onClick={prevPage}>преведущая</button>
-      <button onClick={nextPage}>следующая</button>
-    </>
+      <div className="producers__button_list">
+        <button onClick={prevPage} className="producers__button">
+          prev page
+        </button>
+        <button onClick={nextPage} className="producers__button">
+          next page
+        </button>
+      </div>
+    </fieldset>
   )
 }
 

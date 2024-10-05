@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react"
 import Sort from "./Sort"
-import Filter from "./Filter"
-import { Link } from "react-router-dom"
+import Filters from "./Filters"
 
 const CatalogAnime = () => {
   const url = "https://api.jikan.moe/v4/anime?"
@@ -11,17 +10,28 @@ const CatalogAnime = () => {
   const [page, setPage] = useState(1)
   const [sort, setSort] = useState("asc")
   const [order, setOrder] = useState("popularity")
-  const [producers, setproducers] = useState([])
+  const [filters, setFilters] = useState({
+    type: "",
+    rating: "",
+    status: "",
+    start_date: "",
+    end_date: "",
+    genres: [],
+    genres_exclude: [],
+    producers: [],
+    limit: 24,
+  })
   const searchParams = new URLSearchParams("")
   searchParams.append("order_by", order)
   searchParams.append("sort", sort)
-
+  /* добавление фильтров в url */
+  for (let f in filters) {
+    searchParams.append(f, filters[f])
+  }
   const getAnimeList = async () => {
     const response = await fetch(url + searchParams).then((response) =>
       response.json()
     )
-    console.log(response.data)
-    console.log(url + searchParams)
     setAnime(response.data)
     setPagination(response.pagination)
     setPage(response.pagination.current_page)
@@ -30,7 +40,7 @@ const CatalogAnime = () => {
     setTimeout(() => {
       getAnimeList()
     }, 1000)
-  }, [sort, order, producers])
+  }, [sort, order, filters])
   /* переключение страниц */
   function nextPage() {
     if (page < pagination.last_visible_page) {
@@ -54,48 +64,68 @@ const CatalogAnime = () => {
   function orderSort(order) {
     setOrder(order)
   }
-  /* получение с producers */
+  /* получение  с producers */
   function addproducersFilter(newproducers, bool) {
     bool
-      ? setproducers([...producers, newproducers])
-      : setproducers(producers.filter((el) => el !== newproducers))
+      ? setFilters({
+          ...filters,
+          producers: [...filters.producers, newproducers],
+        })
+      : setFilters({
+          ...filters,
+          producers: filters.producers.filter((el) => el !== newproducers),
+        })
   }
-  searchParams.append("producers", producers)
+
+  /* получение с фильтров  */
+  function select(status, filterElement) {
+    setFilters({ ...filters, [filterElement]: status })
+  }
+
+  function selectStartDate(start) {
+    setFilters({ ...filters, start_date: start })
+  }
+  function selectEndDate(end) {
+    setFilters({ ...filters, end_date: end })
+  }
   return (
     <>
-      <Filter addproducersFilter={addproducersFilter} />
+      <Filters
+        addproducersFilter={addproducersFilter}
+        select={select}
+        selectStartDate={selectStartDate}
+        selectEndDate={selectEndDate}
+      />
       <Sort selectedSort={selectedSort} orderSort={orderSort} />
-
       <div className="anime__list">
-        <p>
-          страница: {pagination.current_page} из
-          {pagination.last_visible_page}
-        </p>
-        <button onClick={prevPage}>преведущая</button>
-        <button onClick={nextPage}>следующая</button>
         {anime.map((el, index) => {
           return (
             <div key={index} className="anime__item">
               <img
-                src={`${el.images.jpg.small_image_url}`}
+                src={`${el.images.jpg.large_image_url}`}
                 alt={`${el.title}`}
-                width={"54px"}
+                width={"200px"}
               />
               <ul>
-                {el.producers.map((el) => {
-                  return <li key={el.name}>{el.name}</li>
-                })}
-                <li>{el.mal_id}</li>
-                <li>{el.title}</li>
-                <li>Ранг:{el.rank}</li>
-                <li>Оценка:{el.score}</li>
-                <li>Оценившие:{el.scored_by}</li>
-                <li>Статус:{el.status}</li>
-                <li>Год выхода:{el.year}</li>
+                <li>
+                  <h3>{el.title}</h3>
+                </li>
+                <li>rank:{el.rank}</li>
+                <li>score:{el.score}</li>
+                <li>scored by:{el.scored_by}</li>
+                <li>year:{el.year}</li>
               </ul>
             </div>
           )
         })}
+      </div>
+      <div className="buttons__anime">
+        <button onClick={prevPage}>prev page</button>
+        <p>
+          page: {pagination.current_page} from
+          {pagination.last_visible_page}
+        </p>
+        <button onClick={nextPage}>next page</button>
       </div>
     </>
   )

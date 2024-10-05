@@ -1,6 +1,6 @@
 const Sort = ({ selectedSort, orderSort }) => {
   return (
-    <>
+    <div className="sort">
       <label htmlFor="selected__sort">Сортировка по </label>
       <select
         id="selected__sort"
@@ -30,7 +30,7 @@ const Sort = ({ selectedSort, orderSort }) => {
         <option value="desc">по убываванию</option>
         <option value="asc">по возрастанию</option>
       </select>
-    </>
+    </div>
   )
 }
 

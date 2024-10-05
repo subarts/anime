@@ -14,7 +14,7 @@ const GenresAnime = () => {
     setTimeout(() => getGenresAnime(), 3000)
   }, [])
   return (
-    <fieldset>
+    <fieldset className="genres__list">
       <legend>Genres</legend>
       {genres.map((el, index) => {
         return (

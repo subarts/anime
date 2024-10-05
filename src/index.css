@@ -1,21 +1,83 @@
 li{
-list-style-type: none;
+  list-style-type: none;
+
 }
 ul{
   margin: 0;
   padding: 0;
 }
+#root{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+  gap: 20px;
+}
 .anime__item{
   border: 1px solid lightgray;
   border-radius: 10px;
-  width: fit-content;
-  padding: 10px;
+  display: flex;
+  overflow: hidden;
+  gap: 10px;
+  width: 400px;
 }
 .anime__list{
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  justify-content: center;
 }
 body{
-max-width: 1200px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.producers__list{
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+}
+.producers__button{
+  width: fit-content;
+}
+.producers__button_list{
+  display: flex;
+  gap: 10px;
+}
+.genres__list{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  max-height: 625px;
+  width: 500px;
+}
+.filters__item,.filters__date{
+  flex-direction: column;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  width: fit-content;
+  height: fit-content;
+}
+.sort{
+  display: flex;
+  gap: 20px;
+}
+.buttons__anime{
+  display: flex;
+  margin: 20px 0;
+  gap: 20px; 
+  align-items: center;
+}
+.buttons__anime>button{
+  height: 25px
+}
+.filters__list{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.anime__item:hover{
+  border-color: lightcyan;
+  background-color: lightcyan;
 }
