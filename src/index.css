@@ -1,6 +1,9 @@
 li{
   list-style-type: none;
-
+}
+.anime__item{
+  text-decoration: none;
+  color: black;
 }
 ul{
   margin: 0;
@@ -80,4 +83,7 @@ body{
 .anime__item:hover{
   border-color: lightcyan;
   background-color: lightcyan;
+}
+.anime__info ul{
+  padding-inline-start: 40px;
 }

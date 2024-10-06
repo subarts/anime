@@ -1,4 +1,13 @@
 const Sort = ({ selectedSort, orderSort }) => {
+  const obj = {
+    mal_id: "айдишник",
+    score: "оценке",
+    scored_by: "количеству оценок",
+    favorites: "количеству favorites",
+    episodes: "количеству эпизодов",
+    start_date: "по начальной дате",
+    end_date: "по конечной дате",
+  }
   return (
     <div className="sort">
       <label htmlFor="selected__sort">Сортировка по </label>
@@ -8,16 +17,15 @@ const Sort = ({ selectedSort, orderSort }) => {
         defaultValue={"popularity"}
         onChange={(e) => orderSort(e.target.value)}
       >
-        <option value="popularity" defaultValue>
-          популярности
-        </option>
-        <option value="mal_id">айдишник</option>
-        <option value="score">оценке</option>
-        <option value="scored_by"> количеству оценок</option>
-        <option value="favorites">количеству favorites</option>
-        <option value="episodes">количеству эпизодов</option>
-        <option value="start_date">по начальной дате</option>
-        <option value="end_date">по конечной дате</option>
+        <option value="popularity">популярности</option>
+
+        {Object.entries(obj).map((el, index) => {
+          return (
+            <option key={index} value={el[0]}>
+              {el[1]}
+            </option>
+          )
+        })}
       </select>
       <select
         defaultValue={"asc"}

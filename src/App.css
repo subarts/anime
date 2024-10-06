@@ -15,8 +15,12 @@
 .produsers__item:hover{
   background-color: lightgray;
 }
-.page_info{
+.page__info{
   display: flex;
   gap: 5px;
   flex-wrap: wrap;
+  margin: 30px;
+}
+.page__info>p{
+  max-width: 1000px;
 }

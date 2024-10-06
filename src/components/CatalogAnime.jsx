@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react"
+import { Link, useParams } from "react-router-dom"
 import Sort from "./Sort"
 import Filters from "./Filters"
+import PageAnime from "./PageAnime"
 
 const CatalogAnime = () => {
   const url = "https://api.jikan.moe/v4/anime?"
@@ -57,7 +59,7 @@ const CatalogAnime = () => {
     }
     return
   }
-  /* получение сортировок с sort.jsx */
+  /* получение сортировок с sort */
   function selectedSort(select) {
     setSort(select)
   }
@@ -77,7 +79,7 @@ const CatalogAnime = () => {
         })
   }
 
-  /* получение с фильтров  */
+  /* получение с filters  */
   function select(status, filterElement) {
     setFilters({ ...filters, [filterElement]: status })
   }
@@ -100,22 +102,28 @@ const CatalogAnime = () => {
       <div className="anime__list">
         {anime.map((el, index) => {
           return (
-            <div key={index} className="anime__item">
+            <Link
+              to={el.mal_id.toString()}
+              element={<PageAnime />}
+              key={index}
+              className="anime__item"
+            >
               <img
-                src={`${el.images.jpg.large_image_url}`}
-                alt={`${el.title}`}
+                src={el.images.jpg.large_image_url}
+                alt={el.title}
                 width={"200px"}
               />
               <ul>
                 <li>
                   <h3>{el.title}</h3>
                 </li>
+                <li>{el.mal_id}</li>
                 <li>rank:{el.rank}</li>
                 <li>score:{el.score}</li>
                 <li>scored by:{el.scored_by}</li>
                 <li>year:{el.year}</li>
               </ul>
-            </div>
+            </Link>
           )
         })}
       </div>
