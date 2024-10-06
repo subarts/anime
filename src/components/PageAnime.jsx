@@ -18,7 +18,11 @@ const PageAnime = () => {
     <>
       {isEpmtyObj ? (
         <section className="page__info">
-          <img src={info.images.jpg.large_image_url} alt="обложка" />
+          <img
+            src={info.images.jpg.large_image_url}
+            alt="обложка"
+            width={"600px"}
+          />
           <section className="anime__info">
             <h1>{info.title}</h1>
             <div className="titles">
@@ -90,10 +94,10 @@ const PageAnime = () => {
               </li>
             </ul>
           </section>
-          <p>
+          <div>
             <h4>Synopsis</h4>
-            {info.synopsis}
-          </p>
+            <p>{info.synopsis}</p>
+          </div>
         </section>
       ) : (
         <span>загрузка</span>

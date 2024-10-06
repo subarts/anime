@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react"
-import { Link, useParams } from "react-router-dom"
+import { Link } from "react-router-dom"
 import Sort from "./Sort"
 import Filters from "./Filters"
 import PageAnime from "./PageAnime"
+import SearchAnime from "./SearchAnime"
 
 const CatalogAnime = () => {
   const url = "https://api.jikan.moe/v4/anime?"
@@ -22,6 +23,7 @@ const CatalogAnime = () => {
     genres_exclude: [],
     producers: [],
     limit: 24,
+    q: "",
   })
   const searchParams = new URLSearchParams("")
   searchParams.append("order_by", order)
@@ -90,6 +92,10 @@ const CatalogAnime = () => {
   function selectEndDate(end) {
     setFilters({ ...filters, end_date: end })
   }
+  /* поиск */
+  function searchAnime(search) {
+    setFilters({ ...filters, q: search })
+  }
   return (
     <>
       <Filters
@@ -98,6 +104,7 @@ const CatalogAnime = () => {
         selectStartDate={selectStartDate}
         selectEndDate={selectEndDate}
       />
+      <SearchAnime searchAnime={searchAnime} />
       <Sort selectedSort={selectedSort} orderSort={orderSort} />
       <div className="anime__list">
         {anime.map((el, index) => {
@@ -117,7 +124,7 @@ const CatalogAnime = () => {
                 <li>
                   <h3>{el.title}</h3>
                 </li>
-                <li>{el.mal_id}</li>
+                <li>ID:{el.mal_id}</li>
                 <li>rank:{el.rank}</li>
                 <li>score:{el.score}</li>
                 <li>scored by:{el.scored_by}</li>
