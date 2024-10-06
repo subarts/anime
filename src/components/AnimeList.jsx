@@ -6,7 +6,6 @@ const GeatAnimeAll = () => {
   const getApiData = async () => {
     const response = await fetch(url).then((response) => response.json())
     setAnime(response.data)
-    console.log(response.data)
   }
   useEffect(() => {
     getApiData()

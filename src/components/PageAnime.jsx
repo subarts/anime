@@ -8,7 +8,6 @@ const PageAnime = () => {
   const getInfo = async () => {
     const response = await fetch(url).then((response) => response.json())
     setInfo(response.data)
-    console.log(response.data)
   }
   useEffect(() => {
     getInfo()
