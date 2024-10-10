@@ -4,7 +4,6 @@ import Sort from "./Sort"
 import Filters from "./Filters"
 import PageAnime from "./PageAnime"
 import SearchAnime from "./SearchAnime"
-
 const CatalogAnime = () => {
   const url = "https://api.jikan.moe/v4/anime?"
 
@@ -96,6 +95,7 @@ const CatalogAnime = () => {
   function searchAnime(search) {
     setFilters({ ...filters, q: search })
   }
+
   return (
     <>
       <Filters

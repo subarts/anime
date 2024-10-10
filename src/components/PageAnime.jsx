@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
+import { useStore } from "./Store"
 
 const PageAnime = () => {
   const { id } = useParams()
@@ -13,6 +14,14 @@ const PageAnime = () => {
     getInfo()
   }, [])
   const isEpmtyObj = Object.entries(info).length > 0
+  /* zustand */
+  const { addAnime } = useStore((state) => state)
+  const buttonClick = () => {
+    const dat = new Date().toJSON()
+    info.date = dat.toLocaleString("ru-RU")
+    addAnime(info)
+  }
+
   return (
     <>
       {isEpmtyObj ? (
@@ -97,6 +106,14 @@ const PageAnime = () => {
             <h4>Synopsis</h4>
             <p>{info.synopsis}</p>
           </div>
+          <iframe
+            width="600"
+            height="300"
+            autoPlay={true}
+            src={info.trailer.embed_url}
+            onError={(e) => console.error("Ошибка воспроизведения видео:", e)}
+          ></iframe>
+          <button onClick={buttonClick}> смотреть позже</button>
         </section>
       ) : (
         <span>загрузка</span>
