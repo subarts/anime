@@ -1,5 +1,4 @@
 const InformationBlockAnime = ({ info }) => {
-  console.log(info)
   return (
     <>
       <h4>Information</h4>

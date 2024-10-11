@@ -19,7 +19,7 @@ const PageAnime = () => {
   const isEpmtyObj = Object.entries(info).length > 0
   /* zustand */
   const { addAnime } = useStore((state) => state)
-  const buttonClick = () => {
+  const addWatchLater = () => {
     const date = new Date()
     const milliseconds = Date.now()
     const newObjAnime = {
@@ -66,28 +66,29 @@ const PageAnime = () => {
             <p>{info.synopsis}</p>
           </div>
           {info.trailer.embed_url !== null ? (
-            <>
+            <div className="trailer">
               <iframe
                 src={info.trailer.embed_url}
                 onError={(e) =>
                   console.error("Ошибка воспроизведения видео:", e)
                 }
               ></iframe>
-              <label htmlFor="expectationInput">expectation (1-10)</label>
-
-              <input
-                className="expectation__input"
-                id="expectationInput"
-                type="number"
-                min={1}
-                max={10}
-                defaultValue={"1"}
-                onChange={(e) => setExpectation(e.target.value)}
-              />
-              <button onClick={buttonClick} className="watch__later_button">
-                смотреть позже
-              </button>
-            </>
+              <div className="trailer__expectation">
+                <label htmlFor="expectationInput">Expectation (1-10)</label>
+                <input
+                  className="expectation__input"
+                  id="expectationInput"
+                  type="number"
+                  min={1}
+                  max={10}
+                  defaultValue={"1"}
+                  onChange={(e) => setExpectation(e.target.value)}
+                />
+                <button onClick={addWatchLater} className="watch__later_button">
+                  смотреть позже
+                </button>
+              </div>
+            </div>
           ) : (
             ""
           )}

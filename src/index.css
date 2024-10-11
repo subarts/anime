@@ -97,7 +97,7 @@ h1{
   justify-content: center;
 }
 .watch__later_button{
-  height: 50px;
+  height: 30px;
 }
 .expectation__input{
   height: 30px;
@@ -127,4 +127,13 @@ h1{
 }
 .page__info>p{
   max-width: 1000px;
+}
+.trailer{
+  display: flex;
+  gap: 10px;
+}
+.trailer__expectation{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }

@@ -10,7 +10,7 @@ const FilterSingleChoice = ({ select, filter }) => {
         onChange={(e) => select(e.target.value, filterElement)}
       >
         <option key="-1" value="">
-          Выбрать
+          Select
         </option>
         {arrayFilters.map((el, index) => {
           return (

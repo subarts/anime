@@ -30,6 +30,7 @@ const CatalogAnime = () => {
   for (let f in filters) {
     searchParams.append(f, filters[f])
   }
+
   const getAnimeList = async () => {
     const response = await fetch(url + searchParams).then((response) =>
       response.json()
@@ -44,6 +45,7 @@ const CatalogAnime = () => {
     }, 1000)
   }, [sort, order, filters])
   /* переключение страниц */
+
   function nextPage() {
     if (page < pagination.last_visible_page) {
       searchParams.append("page", page + 1)

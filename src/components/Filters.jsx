@@ -12,12 +12,12 @@ const Filter = ({
   const listOfFilters = [
     {
       status: ["airing", "complete", "upcoming"],
-      text: "По статусу",
+      text: "By status",
       nameAndID: "selectedStatus",
     },
     {
       rating: ["g", "pg", "pg13", "r17", "r", "rx"],
-      text: "По рейтингу",
+      text: "By rating",
       nameAndID: "selectedRating",
     },
     {
@@ -32,7 +32,7 @@ const Filter = ({
         "pv",
         "tv_special",
       ],
-      text: "По типу",
+      text: "Type by",
       nameAndID: "selectedType",
     },
   ]
@@ -40,7 +40,7 @@ const Filter = ({
   return (
     <div className="filters__list">
       <fieldset className="filters__item">
-        <legend>Отфильтровать по </legend>
+        <legend>Filter by </legend>
         {listOfFilters.map((el, index) => {
           return <FilterSingleChoice filter={el} select={select} key={index} />
         })}
