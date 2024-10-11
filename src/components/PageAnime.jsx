@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { useStore } from "./Store"
-
 const PageAnime = () => {
   const { id } = useParams()
   const url = `https://api.jikan.moe/v4/anime/${id}/full`
   const [info, setInfo] = useState({})
+  const [expectation, setExpectation] = useState(1)
   const getInfo = async () => {
     const response = await fetch(url).then((response) => response.json())
     setInfo(response.data)
@@ -17,9 +17,16 @@ const PageAnime = () => {
   /* zustand */
   const { addAnime } = useStore((state) => state)
   const buttonClick = () => {
-    const dat = new Date().toJSON()
-    info.date = dat.toLocaleString("ru-RU")
-    addAnime(info)
+    const date = new Date()
+    const milliseconds = Date.now()
+    const newObjAnime = {
+      trailer_url: info.trailer.embed_url,
+      date: date.toLocaleDateString(),
+      milliseconds: milliseconds,
+      expectation: expectation,
+      title: info.title,
+    }
+    addAnime(newObjAnime)
   }
 
   return (
@@ -106,14 +113,32 @@ const PageAnime = () => {
             <h4>Synopsis</h4>
             <p>{info.synopsis}</p>
           </div>
-          <iframe
-            width="600"
-            height="300"
-            autoPlay={true}
-            src={info.trailer.embed_url}
-            onError={(e) => console.error("Ошибка воспроизведения видео:", e)}
-          ></iframe>
-          <button onClick={buttonClick}> смотреть позже</button>
+          {info.trailer.embed_url !== null ? (
+            <>
+              <iframe
+                src={info.trailer.embed_url}
+                onError={(e) =>
+                  console.error("Ошибка воспроизведения видео:", e)
+                }
+              ></iframe>
+              <label htmlFor="expectationInput">expectation (1-10)</label>
+
+              <input
+                className="expectation__input"
+                id="expectationInput"
+                type="number"
+                min={1}
+                max={10}
+                defaultValue={"1"}
+                onChange={(e) => setExpectation(e.target.value)}
+              />
+              <button onClick={buttonClick} className="watch__later_button">
+                смотреть позже
+              </button>
+            </>
+          ) : (
+            ""
+          )}
         </section>
       ) : (
         <span>загрузка</span>

@@ -91,7 +91,7 @@ const CatalogAnime = () => {
   function selectEndDate(end) {
     setFilters({ ...filters, end_date: end })
   }
-  /* поиск */
+  /* получение с searchAnime,поиск */
   function searchAnime(search) {
     setFilters({ ...filters, q: search })
   }

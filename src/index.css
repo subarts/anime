@@ -90,3 +90,15 @@ body{
 h1{
   font-size: 36px;
 }
+.watchLater__list{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+.watch__later_button{
+  height: 50px;
+}
+.expectation__input{
+  height: 30px;
+}
