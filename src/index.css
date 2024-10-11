@@ -102,3 +102,29 @@ h1{
 .expectation__input{
   height: 30px;
 }
+.genres__List,
+.produsers__list{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.genres__item,
+.produsers__item{
+  padding: 10px;
+  border: 1px solid lightgray;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.genres__item:hover,
+.produsers__item:hover{
+  background-color: lightgray;
+}
+.page__info{
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin: 30px;
+}
+.page__info>p{
+  max-width: 1000px;
+}
